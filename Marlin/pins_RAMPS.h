@@ -93,7 +93,8 @@
 #define X_ENABLE_PIN       38
 #ifndef X_CS_PIN
   //#define X_CS_PIN         53
-  #define X_CS_PIN         59 // RCH: In AUX2 bottom pin header line the forth pin starting on the right; Old value 53
+  //#define X_CS_PIN         59 // RCH: In AUX2 bottom pin header line the forth pin starting on the right; Old value 53
+  #define X_CS_PIN         44 // RCH: In AUX2 bottom pin header line the second pin starting on the right; Old value 53
 #endif
 
 
@@ -101,8 +102,8 @@
 #define Y_DIR_PIN          61
 #define Y_ENABLE_PIN       56
 #ifndef Y_CS_PIN
-  //#define Y_CS_PIN         49
-  #define Y_CS_PIN         63 // RCH: In AUX2 upper pin header line the forth pin starting on the right; Old value 49
+  #define Y_CS_PIN         49
+  //#define Y_CS_PIN         63 // RCH: In AUX2 upper pin header line the forth pin starting on the right; Old value 49
 #endif
 
 #define Z_STEP_PIN         46
@@ -133,7 +134,8 @@
 #if ENABLED(TMC_USE_SW_SPI)
   #ifndef TMC_SW_MOSI
     //#define TMC_SW_MOSI    66
-    #define TMC_SW_MOSI    64 // RCH: pin 64: in AUX2 bottom pin header line the third pin starting on the right; A.K.A SDI; Old value 66
+    //#define TMC_SW_MOSI    64 // RCH: pin 64: in AUX2 bottom pin header line the third pin starting on the right; A.K.A SDI; Old value 66
+    #define TMC_SW_MOSI    59 // RCH: In AUX2 bottom pin header line the forth pin starting on the right; A.K.A SDI; Old value 66
   #endif
   #ifndef TMC_SW_MISO
     //#define TMC_SW_MISO    44
@@ -141,7 +143,8 @@
   #endif
   #ifndef TMC_SW_SCK
     //#define TMC_SW_SCK     64
-    #define TMC_SW_SCK     44 // RCH: pin 44: in AUX2 bottom pin header line the second pin starting on the right; A.K.A SCK; Old value 64
+    //#define TMC_SW_SCK     44 // RCH: pin 44: in AUX2 bottom pin header line the second pin starting on the right; A.K.A SCK; Old value 64
+    #define TMC_SW_SCK     64 // RCH: In AUX2 bottom pin header line the third pin starting on the right; A.K.A SCK; Old value 64
   #endif
 #endif
 
