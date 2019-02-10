@@ -784,10 +784,21 @@
 
 #if ENABLED(MESH_BED_LEVELING) || ENABLED(AUTO_BED_LEVELING_UBL)
   // Override the mesh area if the automatic (max) area is too large
-  #define MESH_MIN_X 6 
-  #define MESH_MIN_Y 3
-  #define MESH_MAX_X X_BED_SIZE + 10
-  #define MESH_MAX_Y Y_BED_SIZE + 10
+
+  //  RCH:
+  //  Measurements taken with a ruler from the lines printed into de bed (theroetical axis) to the probe holes.  
+  //   ___________________
+  //  |   o      o      o | 203
+  //  |                   |
+  //  |   o      o      o | 105
+  //  |                   |  
+  //  |   o      o      o |  7
+  //  |___________________| 
+  //     35    136,5   238
+  #define MESH_MIN_X  35 - X_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 35  
+  #define MESH_MIN_Y   7 - Y_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 7        
+  #define MESH_MAX_X 238 - X_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 238
+  #define MESH_MAX_Y 203 - Y_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 203      
 
   //RCH : Values for MESH_LEVEL
 //  #define MESH_MIN_X 6 
