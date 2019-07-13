@@ -93,8 +93,9 @@
 #define X_ENABLE_PIN       38
 #ifndef X_CS_PIN
   //#define X_CS_PIN         53
-  //#define X_CS_PIN         59 // RCH: In AUX2 bottom pin header line the forth pin starting on the right; Old value 53
-  #define X_CS_PIN         44 // RCH: In AUX2 bottom pin header line the second pin starting on the right; Old value 53
+  #define X_CS_PIN         59 // RCH: In AUX2 bottom pin header line the forth pin starting on the right; Old value 53
+  //define X_CS_PIN         44 // RCH: In AUX2 bottom pin header line the second pin starting on the right; Old value 53
+  
 #endif
 
 
@@ -124,7 +125,7 @@
 #define E1_DIR_PIN         34
 #define E1_ENABLE_PIN      30
 #ifndef E1_CS_PIN
-  #define E1_CS_PIN        44
+  //#define E1_CS_PIN        44
   //#define E1_CS_PIN        65 // RCH: In AUX2 upper pin header line the most right pin; Old value 44 
 #endif
 
@@ -135,16 +136,19 @@
   #ifndef TMC_SW_MOSI
     //#define TMC_SW_MOSI    66
     //#define TMC_SW_MOSI    64 // RCH: pin 64: in AUX2 bottom pin header line the third pin starting on the right; A.K.A SDI; Old value 66
-    #define TMC_SW_MOSI    59 // RCH: In AUX2 bottom pin header line the forth pin starting on the right; A.K.A SDI; Old value 66
+    //#define TMC_SW_MOSI    59 // RCH: In AUX2 bottom pin header line the forth pin starting on the right; A.K.A SDI; Old value 66
+    #define TMC_SW_MOSI    66 // RCH: pin 66: in AUX2 bottom pin header line the most right pin; A.K.A SDI
   #endif
   #ifndef TMC_SW_MISO
     //#define TMC_SW_MISO    44
-    #define TMC_SW_MISO    66 // RCH: pin 66: in AUX2 bottom pin header line the most right pin; A.K.A SDO; Old value 44 
+    //#define TMC_SW_MISO    66 // RCH: pin 66: in AUX2 bottom pin header line the most right pin; A.K.A SDO; Old value 44 
+    #define TMC_SW_MISO    64 // RCH: pin 64: in AUX2 bottom pin header line the third pin starting on the right; A.K.A SDO; Old value 44
+
   #endif
   #ifndef TMC_SW_SCK
     //#define TMC_SW_SCK     64
-    //#define TMC_SW_SCK     44 // RCH: pin 44: in AUX2 bottom pin header line the second pin starting on the right; A.K.A SCK; Old value 64
-    #define TMC_SW_SCK     64 // RCH: In AUX2 bottom pin header line the third pin starting on the right; A.K.A SCK; Old value 64
+    //#define TMC_SW_SCK     64 // RCH: In AUX2 bottom pin header line the third pin starting on the right; A.K.A SCK; Old value 64
+    #define TMC_SW_SCK     44 // RCH: pin 44: in AUX2 bottom pin header line the second pin starting on the right; A.K.A SCK; Old value 64
   #endif
 #endif
 
