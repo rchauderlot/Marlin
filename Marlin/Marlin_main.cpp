@@ -601,13 +601,7 @@ uint8_t target_extruder;
 #endif
 
 #if HAS_POWER_SWITCH
-  bool powersupply_on = (
-    #if ENABLED(PS_DEFAULT_OFF)
-      false
-    #else
-      true
-    #endif
-  );
+  bool powersupply_on;
   #if ENABLED(AUTO_POWER_CONTROL)
     #define PSU_ON()  powerManager.power_on()
     #define PSU_OFF() powerManager.power_off()
@@ -943,9 +937,9 @@ void setup_powerhold() {
   #endif
   #if HAS_POWER_SWITCH
     #if ENABLED(PS_DEFAULT_OFF)
-      PSU_OFF();
+      powersupply_on = true;  PSU_OFF();
     #else
-      PSU_ON();
+      powersupply_on = false; PSU_ON();
     #endif
   #endif
 }
@@ -2098,7 +2092,17 @@ void clean_up_after_endstop_or_probe_move() {
         }
       }
 
+      #if ENABLED(BLTOUCH_FORCE_5V_MODE)
+        bltouch_command(BLTOUCH_5V_MODE);
+      #elif ENABLED(BLTOUCH_V3)
+        bltouch_command(BLTOUCH_OD_MODE);
+      #endif
+
       bltouch_command(deploy ? BLTOUCH_DEPLOY : BLTOUCH_STOW);
+      
+      #if ENABLED(BLTOUCH_V3)
+        if (deploy) bltouch_command(BLTOUCH_SW_MODE);
+      #endif
 
       #if ENABLED(DEBUG_LEVELING_FEATURE)
         if (DEBUGGING(LEVELING)) {
