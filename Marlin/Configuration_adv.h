@@ -786,22 +786,22 @@
   // Override the mesh area if the automatic (max) area is too large
 
   //  RCH:
-  //  Measurements taken with a ruler from the lines printed into de bed (theroetical axis) to the probe holes.  
+  //  Measurements taken with a ruler from the lines printed into de bed (theroetical axis) to the probe holes.
   //   ___________________
   //  |   o      o      o | 203
   //  |                   |
   //  |   o      o      o | 105
-  //  |                   |  
+  //  |                   |
   //  |   o      o      o |  7
-  //  |___________________| 
+  //  |___________________|
   //     35    136,5   238
-  #define MESH_MIN_X  35 - X_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 35  
-  #define MESH_MIN_Y   7 - Y_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 7        
+  #define MESH_MIN_X  35 - X_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 35
+  #define MESH_MIN_Y   7 - Y_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 7
   #define MESH_MAX_X 238 - X_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 238
-  #define MESH_MAX_Y 203 - Y_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 203      
+  #define MESH_MAX_Y 203 - Y_PROBE_OFFSET_FROM_EXTRUDER // Measurement from border to mark in the bed: 203
 
   //RCH : Values for MESH_LEVEL
-//  #define MESH_MIN_X 6 
+//  #define MESH_MIN_X 6
 //  #define MESH_MIN_Y 3
 //  #define MESH_MAX_X X_BED_SIZE - 42
 //  #define MESH_MAX_Y Y_BED_SIZE - 10
@@ -1120,13 +1120,13 @@
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
   #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
-  #define X_CURRENT          800  // rms current in mA. Multiply by 1.41 for peak current.
+  #define X_CURRENT          600  // rms current in mA. Multiply by 1.41 for peak current.
   #define X_MICROSTEPS        16  // 0..256
 
   #define Y_CURRENT          800
   #define Y_MICROSTEPS        16
 
-  #define Z_CURRENT         1000 // RCH: Raising the current as Im connecting 2 motors to a single driver; Old value 800
+  #define Z_CURRENT          800 // RCH: Raising the current as Im connecting 2 motors to a single driver; Old value 800
   #define Z_MICROSTEPS        16
 
   #define X2_CURRENT         800
@@ -1232,7 +1232,7 @@
    * Enable M122 debugging command for TMC stepper drivers.
    * M122 S0/1 will enable continous reporting.
    */
-  #define TMC_DEBUG // RCH: enabled to debug issues with the TCM drivers 
+  #define TMC_DEBUG // RCH: enabled to debug issues with the TCM drivers
 
   /**
    * M915 Z Axis Calibration
@@ -1243,7 +1243,7 @@
    *
    * Use M915 Snn to specify the current.
    * Use M925 Znn to add extra Z height to Z_MAX_POS.
-   */ 
+   */
   //#define TMC_Z_CALIBRATION // RCH: take a look to this
   #if ENABLED(TMC_Z_CALIBRATION)
     #define CALIBRATION_CURRENT 250

@@ -41,12 +41,59 @@
 // See https://www.thingiverse.com/asset:66604
 //
 
+// #ifndef X_CS_PIN
+//   #define X_CS_PIN 59
+// #endif
+
+// #ifndef Y_CS_PIN
+//   #define Y_CS_PIN 63
+// #endif
+
+// AUX-2 Port scheme
+//  -----------------------------
+// | GND | D63 | D40 | D42 | D65 |
+//  -----------------------------
+// | 5 V | D59 | D64 | D44 | D66 |
+//  -----------------------------
+
+// AUX-2 Port assignations
+//  -----------------------------
+// |  -  |  Y  |  Z  |  E  |E1/Z1|
+//  -----------------------------
+// |  -  | SDI | SCK | SDO |  X  |
+//  -----------------------------
+
 #ifndef X_CS_PIN
-  #define X_CS_PIN 59
+  #define X_CS_PIN         66 // RCH: In AUX2 bottom pin header, the most right pin; Default value 59
 #endif
 
 #ifndef Y_CS_PIN
-  #define Y_CS_PIN 63
+  #define Y_CS_PIN         63 // RCH: In AUX2 upper pin header, the forth pin starting on the right
 #endif
+
+#ifndef Z_CS_PIN
+  #define Z_CS_PIN         40 // RCH: In AUX2 upper pin header, the third pin starting on the right
+#endif
+
+#ifndef E0_CS_PIN
+  #define E0_CS_PIN        42 // RCH: In AUX2 upper pin header, the second pin starting on the right
+#endif
+
+#ifndef E1_CS_PIN
+  #define E1_CS_PIN        65 // RCH: In AUX2 upper pin header, the most right pin; Default value 44
+#endif
+
+#if ENABLED(TMC_USE_SW_SPI)
+  #ifndef TMC_SW_MOSI
+    #define TMC_SW_MOSI    59 // RCH: In AUX2 bottom pin header, the forth pin starting on the right; A.K.A SDI; Default value 66
+  #endif
+  #ifndef TMC_SW_MISO
+    #define TMC_SW_MISO    44 // RCH: pin 66: in AUX2 bottom pin header, the second most right pin; A.K.A SDO; Default value 44
+  #endif
+  #ifndef TMC_SW_SCK
+    #define TMC_SW_SCK     64 // RCH: In AUX2 bottom pin header, the third pin starting on the right; A.K.A SCK; Default value 64
+  #endif
+#endif
+
 
 #include "pins_RAMPS.h"

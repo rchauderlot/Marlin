@@ -131,7 +131,7 @@
 // The following define selects which electronics board you have.
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_RAMPS_14_EFB
+  #define MOTHERBOARD BOARD_MKS_GEN_L
 #endif
 
 // Optional custom name for your RepStrap or other custom machine
@@ -140,7 +140,7 @@
 
 // Define this to set a unique identifier for this printer, (Used by some programs to differentiate between machines)
 // You can use an online service to generate a random UUID. (eg http://www.uuidgenerator.net/version4)
-#define MACHINE_UUID "95e67b54-2229-11e9-ab14-d663bd873d93"
+#define MACHINE_UUID "778b4615-ee32-4234-a898-1dea64dc05ec"
 
 // @section extruder
 
@@ -526,22 +526,22 @@
 //#define USE_ZMAX_PLUG
 
 // Enable pullup for all endstops to prevent a floating state
-#define ENDSTOPPULLUPS 
+#define ENDSTOPPULLUPS
 #if DISABLED(ENDSTOPPULLUPS)
   // Disable ENDSTOPPULLUPS to set pullups individually
   //#define ENDSTOPPULLUP_XMAX
-  //#define ENDSTOPPULLUP_YMAX 
+  //#define ENDSTOPPULLUP_YMAX
   //#define ENDSTOPPULLUP_ZMAX
   #define ENDSTOPPULLUP_XMIN // RCH: enabled for tmc2130 driver
   #define ENDSTOPPULLUP_YMIN // RCH: enabled for using the makerbot endstops
-  #define ENDSTOPPULLUP_ZMIN // RCH: enabled to use TMC2130 in the future, meanwhile, no endstop will be used as we will use the inductive probe 
+  #define ENDSTOPPULLUP_ZMIN // RCH: enabled to use TMC2130 in the future, meanwhile, no endstop will be used as we will use the inductive probe
   #define ENDSTOPPULLUP_ZMIN_PROBE // RCH: set to true for inductive sensor
 #endif
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
-#define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true for TMC2130 
+#define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true for TMC2130
 #define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true for using the makerbot endstops
-#define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true to use TMC2130 in the future, meanwhile, no endstop will be used as we will use the inductive probe 
+#define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true to use TMC2130 in the future, meanwhile, no endstop will be used as we will use the inductive probe
 #define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 #define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 #define Z_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
@@ -562,12 +562,18 @@
  * :['A4988', 'DRV8825', 'LV8729', 'L6470', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE']
  */
 #define X_DRIVER_TYPE  TMC2130
+//#define Y_DRIVER_TYPE  TMC2130
+#define Z_DRIVER_TYPE  TMC2130
+//#define Z2_DRIVER_TYPE  TMC2130
+#define E0_DRIVER_TYPE  TMC2130
+
+//#define X_DRIVER_TYPE  DRV8825
 #define Y_DRIVER_TYPE  DRV8825
-#define Z_DRIVER_TYPE  DRV8825
+//#define Z_DRIVER_TYPE  DRV8825
 //#define X2_DRIVER_TYPE A4988
 //#define Y2_DRIVER_TYPE A4988
 //#define Z2_DRIVER_TYPE A4988
-#define E0_DRIVER_TYPE DRV8825
+//#define E0_DRIVER_TYPE DRV8825
 //#define E1_DRIVER_TYPE A4988
 //#define E2_DRIVER_TYPE A4988
 //#define E3_DRIVER_TYPE A4988
@@ -619,26 +625,26 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
- // RCH: 
+ // RCH:
  // * According to https://www.prusaprinters.org/calculator/, using the Steps per millimeter - belt driven systems
- //   calculator configuring a 20 teeth pulleys, 32 microsteps (as the DRV8825 driver has), 1.8 degrees per step 
+ //   calculator configuring a 20 teeth pulleys, 32 microsteps (as the DRV8825 driver has), 1.8 degrees per step
  //   (200 steps per turn) motors and 2mm pitched GT2 belts the result is 160 steps per unit for Y axis.
  //
  // * For X axis, TMC2130 drives supposedly has 256 micro stepping so I have to multiply by 8 the previous calculus
- //   providing a result of 1280. But, in Configurations_adv.h 16 microsteps are configured, so , I should divide 
+ //   providing a result of 1280. But, in Configurations_adv.h 16 microsteps are configured, so , I should divide
  //   by 2 instead. Giving me a 80 steps/mm value.
  //
- // * In the same calculator, using the Steps per millimeter - leadscrew driven systems section, and 
+ // * In the same calculator, using the Steps per millimeter - leadscrew driven systems section, and
  //    setting 1.8 degrees per step (200 steps per turn) motors, m6 screws, and 32 micro stepping drivers,
  //    it throws a 6400 result.
  //
- //  *  For the Extruder I've take into account that the inner radius of the bodtech pulley is 7.3mm. Therefore, the 
- //     circumference is 2*pi*r = 45.86mm. As the motor has 200 steps per turn, for 1 mm it should need take 
- //     200 steps / 45.86 mm =  4,36 steps/mm. But as I have a 32 microstepping driver for the extruder, I should 
+ //  *  For the Extruder I've take into account that the inner radius of the bodtech pulley is 7.3mm. Therefore, the
+ //     circumference is 2*pi*r = 45.86mm. As the motor has 200 steps per turn, for 1 mm it should need take
+ //     200 steps / 45.86 mm =  4,36 steps/mm. But as I have a 32 microstepping driver for the extruder, I should
  //     multiply that value by 32, giving the final result of 139,53, which I will round to 140.
- // 
+ //
 // #define DEFAULT_AXIS_STEPS_PER_UNIT   { 12800, 1600, 6400, 500 }
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 160, 6400, 140 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 160, 4035.3, 291.5 }
 
 
 /**
@@ -656,7 +662,7 @@
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
 //#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
-#define DEFAULT_MAX_ACCELERATION      { 1200, 1200, 75, 1200 }
+#define DEFAULT_MAX_ACCELERATION      { 2500, 2500, 80, 2500 }
 
 /**
  * Default Acceleration (change/s) change = mm/s
@@ -669,9 +675,9 @@
 //#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
 //#define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
 //#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
-#define DEFAULT_ACCELERATION          1200    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  1200    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   120    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          2500    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  2500    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   2500    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk (mm/s)
@@ -884,9 +890,9 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR false
-#define INVERT_Y_DIR false
-#define INVERT_Z_DIR true
+#define INVERT_X_DIR true
+#define INVERT_Y_DIR true
+#define INVERT_Z_DIR false
 
 // @section extruder
 
@@ -903,7 +909,7 @@
 
 //#define UNKNOWN_Z_NO_RAISE // Don't raise Z (lower the bed) if Z is "unknown." For beds that fall when Z is powered off.
 
-#define Z_HOMING_HEIGHT 15  // (in mm) Minimal z height before homing (G28) for Z clearance above the bed, clamps, ...
+#define Z_HOMING_HEIGHT 10  // (in mm) Minimal z height before homing (G28) for Z clearance above the bed, clamps, ...
                              // Be sure you have this distance over your Z_MAX_POS in case.
 
 // Direction of endstops when homing; 1=MAX, -1=MIN
@@ -919,7 +925,7 @@
 #define Y_BED_SIZE 210
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
-#define X_MIN_POS -10
+#define X_MIN_POS -12
 #define Y_MIN_POS -7
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
@@ -1011,8 +1017,8 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-//#define AUTO_BED_LEVELING_BILINEAR
-#define AUTO_BED_LEVELING_UBL
+#define AUTO_BED_LEVELING_BILINEAR
+//#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
 /**
@@ -1060,6 +1066,21 @@
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
+
+  //  RCH:
+  //  Measurements taken with a ruler from the lines printed into de bed (theroetical axis) to the probe holes.
+  //   ___________________
+  //  |   o      o      o | 203
+  //  |                   |
+  //  |   o      o      o | 105
+  //  |                   |
+  //  |   o      o      o |  7
+  //  |___________________|
+  //     35    136,5   238
+  #define LEFT_PROBE_BED_POSITION   35 // Measurement from border to mark in the bed: 35
+  #define FRONT_PROBE_BED_POSITION   7 // Measurement from border to mark in the bed: 7
+  #define RIGHT_PROBE_BED_POSITION 238 // Measurement from border to mark in the bed: 238
+  #define BACK_PROBE_BED_POSITION  203 // Measurement from border to mark in the bed: 203
   //#define LEFT_PROBE_BED_POSITION MIN_PROBE_EDGE
   //#define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - MIN_PROBE_EDGE)
   //#define FRONT_PROBE_BED_POSITION MIN_PROBE_EDGE
@@ -1187,7 +1208,7 @@
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (50*60)
-#define HOMING_FEEDRATE_Z  (4*60)
+#define HOMING_FEEDRATE_Z  (3*60)
 
 // @section calibrate
 
@@ -1543,7 +1564,7 @@
 // If you have a speaker that can produce tones, enable it here.
 // By default Marlin assumes you have a buzzer with a fixed frequency.
 //
-//#define SPEAKER
+#define SPEAKER
 
 //
 // The duration and frequency for the UI feedback sound.
