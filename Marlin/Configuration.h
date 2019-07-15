@@ -452,7 +452,7 @@
   #define DEFAULT_bedKp 115.12
   #define DEFAULT_bedKi 4.21
   #define DEFAULT_bedKd 787.44
-  
+
 #endif // PIDTEMPBED
 
 // @section extruder
@@ -643,9 +643,8 @@
  //     200 steps / 45.86 mm =  4,36 steps/mm. But as I have a 32 microstepping driver for the extruder, I should
  //     multiply that value by 32, giving the final result of 139,53, which I will round to 140.
  //
-// #define DEFAULT_AXIS_STEPS_PER_UNIT   { 12800, 1600, 6400, 500 }
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 160, 4035.3, 291.5 }
-
+ // RCH: those values are expressed in the steps needed for a mm, multiplied by the micro stepping value
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 5*64, 5*32, 252.2*64, 9.11*64 }
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -772,7 +771,7 @@
 //#define BLTOUCH
 #if ENABLED(BLTOUCH)
   //#define BLTOUCH_DELAY 375   // (ms) Enable and increase if needed
-  
+
   /**
    * BLTouch V3.0 and newer smart series
    * For genuine BLTouch 3.0 sensors. Clones may be confused by 3.0 command angles. YMMV.
