@@ -1167,7 +1167,7 @@
  * Add a bed leveling sub-menu for ABL or MBL.
  * Include a guided procedure if manual probing is enabled.
  */
-//#define LCD_BED_LEVELING
+#define LCD_BED_LEVELING
 
 #if ENABLED(LCD_BED_LEVELING)
   #define MBL_Z_STEP 0.025    // Step size while manually probing Z axis.
@@ -1495,7 +1495,7 @@
  * you must uncomment the following option or it won't work.
  *
  */
-//#define SDSUPPORT
+#define SDSUPPORT
 
 /**
  * SD CARD: SPI SPEED
@@ -1552,7 +1552,7 @@
 //
 //  Set this option if CLOCKWISE causes values to DECREASE
 //
-//#define REVERSE_ENCODER_DIRECTION
+#define REVERSE_ENCODER_DIRECTION
 
 //
 // This option reverses the encoder direction for navigating LCD menus.
@@ -1591,6 +1591,12 @@
 //======================== LCD / Controller Selection =========================
 //========================   (Character-based LCDs)   =========================
 //=============================================================================
+// RCH: Please!!! Remeber that MKS GEN L needs to have the EXP1 and EXP2
+// connectors rotated 180. !!!! I had to brak the tab in the ribbon connectors
+// which avoids a bad insertion, to inset them rotated. Remeber that EXP 1 goes
+// to EXP1 and EXP2 to EXP2, that not changes, but the connectors are rotated
+// 180 degrees in both cables.
+
 
 //
 // RepRapDiscount Smart Controller.
@@ -1599,6 +1605,13 @@
 // Note: Usually sold with a white PCB.
 //
 //#define REPRAP_DISCOUNT_SMART_CONTROLLER
+
+// RCH: Please!!! Remeber that MKS GEN L needs to have the EXP1 and EXP2
+// connectors rotated 180. !!!! I had to brak the tab in the ribbon connectors
+// which avoids a bad insertion, to inset them rotated. Remeber that EXP 1 goes
+// to EXP1 and EXP2 to EXP2, that not changes, but the connectors are rotated
+// 180 degrees in both cables.
+
 
 //
 // ULTIMAKER Controller.
@@ -1653,6 +1666,12 @@
 //======================== LCD / Controller Selection =========================
 //=====================   (I2C and Shift-Register LCDs)   =====================
 //=============================================================================
+// RCH: Please!!! Remeber that MKS GEN L needs to have the EXP1 and EXP2
+// connectors rotated 180. !!!! I had to brak the tab in the ribbon connectors
+// which avoids a bad insertion, to inset them rotated. Remeber that EXP 1 goes
+// to EXP1 and EXP2 to EXP2, that not changes, but the connectors are rotated
+// 180 degrees in both cables.
+
 
 //
 // CONTROLLER TYPE: I2C
@@ -1713,6 +1732,12 @@
 //=======================   LCD / Controller Selection  =======================
 //=========================      (Graphical LCDs)      ========================
 //=============================================================================
+// RCH: Please!!! Remeber that MKS GEN L needs to have the EXP1 and EXP2
+// connectors rotated 180. !!!! I had to brak the tab in the ribbon connectors
+// which avoids a bad insertion, to inset them rotated. Remeber that EXP 1 goes
+// to EXP1 and EXP2 to EXP2, that not changes, but the connectors are rotated
+// 180 degrees in both cables.
+
 
 //
 // CONTROLLER TYPE: Graphical 128x64 (DOGM)
@@ -1725,7 +1750,12 @@
 // RepRapDiscount FULL GRAPHIC Smart Controller
 // http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller
 //
-//#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+// RCH: Please!!! Remeber that MKS GEN L needs to have the EXP1 and EXP2
+// connectors rotated 180. !!!! I had to brak the tab in the ribbon connectors
+// which avoids a bad insertion, to inset them rotated. Remeber that EXP 1 goes
+// to EXP1 and EXP2 to EXP2, that not changes, but the connectors are rotated
+// 180 degrees in both cables.
 
 //
 // ReprapWorld Graphical LCD
