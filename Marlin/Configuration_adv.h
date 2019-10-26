@@ -440,6 +440,8 @@
   #endif
 #endif
 
+// RCH: to take advantage of the spare driver slot
+//#define Z_DUAL_STEPPER_DRIVERS
 //#define Z_DUAL_STEPPER_DRIVERS
 #if ENABLED(Z_DUAL_STEPPER_DRIVERS)
   //#define Z_DUAL_ENDSTOPS
@@ -1169,7 +1171,7 @@
   //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap
   //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
   //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
-  //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
+  #define STATUS_HEAT_PERCENT       // Show heating in a progress bar
   //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
   //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
 
@@ -1389,6 +1391,23 @@
   //#define MIN_PROBE_EDGE_RIGHT MIN_PROBE_EDGE
   //#define MIN_PROBE_EDGE_FRONT MIN_PROBE_EDGE
   //#define MIN_PROBE_EDGE_BACK MIN_PROBE_EDGE
+
+
+
+  //  RCH:
+  //  Measurements taken with a ruler from the lines printed into de bed (theroetical axis) to the probe holes.
+  //   ___________________
+  //  |   o      o      o | 203
+  //  |                   |
+  //  |   o      o      o | 105
+  //  |                   |
+  //  |   o      o      o |  7
+  //  |___________________|
+  //     35    136,5   238
+  #define MIN_PROBE_EDGE_LEFT   40 // Measurement from border to mark in the bed: 35
+  #define MIN_PROBE_EDGE_FRONT  25 // Measurement from border to mark in the bed: 7
+  #define MIN_PROBE_EDGE_RIGHT  25 // Measurement from border to mark in the bed: 238
+  #define MIN_PROBE_EDGE_BACK   25 // Measurement from border to mark in the bed: 203
 #endif
 
 #if EITHER(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL)
@@ -1842,14 +1861,14 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT     800
+    #define Z_CURRENT     850
     #define Z_MICROSTEPS   16
     #define Z_RSENSE     0.11
     #define Z_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(Z2)
-    #define Z2_CURRENT    800
+    #define Z2_CURRENT    850
     #define Z2_MICROSTEPS  16
     #define Z2_RSENSE    0.11
     #define Z2_CHAIN_POS   -1
@@ -1932,6 +1951,9 @@
   //#define TMC_SW_MISO       -1
   //#define TMC_SW_SCK        -1
 
+  // RCH: I believe that this is required for SKR 1.3, as probably dont have hw dedicated pins for SPI
+  #define TMC_USE_SW_SPI
+
   /**
    * Four TMC2209 drivers can use the same HW/SW serial port with hardware configured addresses.
    * Set the address using jumpers on pins MS1 and MS2.
@@ -1973,7 +1995,7 @@
    */
   #define STEALTHCHOP_XY
   #define STEALTHCHOP_Z
-  #define STEALTHCHOP_E
+  //#define STEALTHCHOP_E // RCH: disabling to have more power in the extruder
 
   /**
    * Optimize spreadCycle chopper parameters by using predefined parameter sets
@@ -2003,6 +2025,8 @@
    * M122 - Report driver parameters (Requires TMC_DEBUG)
    */
   //#define MONITOR_DRIVER_STATUS
+  // RCH: trying to avoid driver problems
+  #define MONITOR_DRIVER_STATUS
 
   #if ENABLED(MONITOR_DRIVER_STATUS)
     #define CURRENT_STEP_DOWN     50  // [mA]
@@ -2057,6 +2081,8 @@
    * homing and adds a guard period for endstop triggering.
    */
   //#define SENSORLESS_HOMING // StallGuard capable drivers only
+  // RCH: enabling sensorless homing in order to reduce cable number
+  #define SENSORLESS_HOMING // StallGuard capable drivers only
 
   /**
    * Use StallGuard2 to probe the bed with the nozzle.
@@ -2068,9 +2094,9 @@
 
   #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
     // TMC2209: 0...255. TMC2130: -64...63
-    #define X_STALL_SENSITIVITY  8
+    #define X_STALL_SENSITIVITY  2 // RCH: raising sensivity to make softer stops
     #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-    #define Y_STALL_SENSITIVITY  8
+    #define Y_STALL_SENSITIVITY  2 // RCH: raising sensivity to make softer stops
     //#define Z_STALL_SENSITIVITY  8
     //#define SPI_ENDSTOPS              // TMC2130 only
     //#define IMPROVE_HOMING_RELIABILITY
@@ -2087,6 +2113,8 @@
    * M122 S0/1 will enable continous reporting.
    */
   //#define TMC_DEBUG
+  // RCH: enabling as I have problems with the drivers.
+  #define TMC_DEBUG
 
   /**
    * You can set your own advanced settings by filling in predefined functions.

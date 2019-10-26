@@ -147,7 +147,7 @@
 #define EXTRUDERS 1
 
 // Generally expected filament diameter (1.75, 2.85, 3.0, ...). Used for Volumetric, Filament Width Sensor, etc.
-#define DEFAULT_NOMINAL_FILAMENT_DIA 3.0
+#define DEFAULT_NOMINAL_FILAMENT_DIA 1.75
 
 // For Cyclops or any "multi-extruder" that shares a single nozzle.
 //#define SINGLENOZZLE
@@ -403,13 +403,13 @@
  *   998 : Dummy Table that ALWAYS reads 25°C or the temperature defined below.
  *   999 : Dummy Table that ALWAYS reads 100°C or the temperature defined below.
  */
-#define TEMP_SENSOR_0 1
+#define TEMP_SENSOR_0 5 // For the trianglelab v6 J-head (best E3D clone) its documented that this is the configuration for the thermistor, same as the original E3D thermistor. https://e3d-online.com/100k-ohm-ntc-thermistor-semitec
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
 #define TEMP_SENSOR_5 0
-#define TEMP_SENSOR_BED 0
+#define TEMP_SENSOR_BED 11 // Heated bed: Orballo printing's MK42 came with a Thermistor NTC 3950 (TEMP_SENSOR 11 firmware Marlin)
 #define TEMP_SENSOR_CHAMBER 0
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
@@ -473,10 +473,15 @@
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
+  // RCH: Values obtained by executing m301 e0
+  #define DEFAULT_Kp 20.72
+  #define DEFAULT_Ki 2.20
+  #define DEFAULT_Kd 48.79
+
   // Ultimaker
-  #define DEFAULT_Kp 22.2
-  #define DEFAULT_Ki 1.08
-  #define DEFAULT_Kd 114
+  // #define DEFAULT_Kp 22.2
+  // #define DEFAULT_Ki 1.08
+  // #define DEFAULT_Kd 114
 
   // MakerGear
   //#define DEFAULT_Kp 7.0
@@ -525,9 +530,9 @@
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  #define DEFAULT_bedKp 10.00
-  #define DEFAULT_bedKi .023
-  #define DEFAULT_bedKd 305.4
+  // #define DEFAULT_bedKp 10.00
+  // #define DEFAULT_bedKi .023
+  // #define DEFAULT_bedKd 305.4
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from pidautotune
@@ -536,6 +541,12 @@
   //#define DEFAULT_bedKd 1675.16
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
+
+  // RCH: obtained via "M303 E-1" command
+  #define DEFAULT_bedKp 115.12
+  #define DEFAULT_bedKi 4.21
+  #define DEFAULT_bedKd 787.44
+
 #endif // PIDTEMPBED
 
 // @section extruder
@@ -636,13 +647,22 @@
 #endif
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
-#define X_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-#define Y_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-#define Z_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+// #define X_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+// #define Y_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+// #define Z_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+// #define X_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+// #define Y_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+// #define Z_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+// #define Z_MIN_PROBE_ENDSTOP_INVERTING false // Set to true to invert the logic of the probe.
+
+#define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true for TMC2130
+#define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true for using the makerbot endstops
+#define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true to use TMC2130 in the future, meanwhile, no endstop will be used as we will use the inductive probe
 #define X_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define Y_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-#define Z_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-#define Z_MIN_PROBE_ENDSTOP_INVERTING false // Set to true to invert the logic of the probe.
+#define Z_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the end
+#define Z_MIN_PROBE_ENDSTOP_INVERTING true // set to true to invert the logic of the probe. // RCH: set to true for inductive sensor
+
 
 /**
  * Stepper Drivers
@@ -672,6 +692,12 @@
 //#define E3_DRIVER_TYPE A4988
 //#define E4_DRIVER_TYPE A4988
 //#define E5_DRIVER_TYPE A4988
+
+#define X_DRIVER_TYPE  TMC2130
+#define Y_DRIVER_TYPE  TMC2130
+#define Z_DRIVER_TYPE  TMC2130
+//#define Z2_DRIVER_TYPE  TMC2130
+#define E0_DRIVER_TYPE  TMC2130
 
 // Enable this feature if all enabled endstop pins are interrupt-capable.
 // This will remove the need to poll the interrupt pins, saving many CPU cycles.
@@ -716,14 +742,20 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+
+// RCH: those values are expressed in the steps needed for a mm, multiplied by the micro stepping value
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 5*16, 5*16, 252.2*16, 9.11*16 }
 
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
+//#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
+
+// RCH: setting this empirically, when it seems work well without stucking or missing steps
+#define DEFAULT_MAX_FEEDRATE          { 175, 175, 2.5, 25 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -736,7 +768,10 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
+//#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
+
+// RCH: reducing all, trying to be conservative
+#define DEFAULT_MAX_ACCELERATION      { 1500, 1500, 50, 2000 }
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -751,9 +786,15 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+// #define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
+// #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
+// #define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+
+// RCH: reducing all, trying to be conservative
+#define DEFAULT_ACCELERATION          1500    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  1500    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   1500    // X, Y, Z acceleration for travel (non printing) moves
+
 
 /**
  * Default Jerk limits (mm/s)
@@ -796,7 +837,7 @@
  *
  * See https://github.com/synthetos/TinyG/wiki/Jerk-Controlled-Motion-Explained
  */
-//#define S_CURVE_ACCELERATION
+#define S_CURVE_ACCELERATION
 
 //===========================================================================
 //============================= Z Probe Options =============================
@@ -852,6 +893,9 @@
  *   (e.g., an inductive probe or a nozzle-based probe-switch.)
  */
 //#define FIX_MOUNTED_PROBE
+
+// RCH: for inductive pinda sensor
+#define FIX_MOUNTED_PROBE
 
 /**
  * Z Servo Probe, such as an endstop switch on a rotating arm.
@@ -919,10 +963,16 @@
  *
  * Specify a Probe position as { X, Y, Z }
  */
-#define NOZZLE_TO_PROBE_OFFSET { 10, 10, 0 }
+//#define NOZZLE_TO_PROBE_OFFSET { 10, 10, 0 }
+
+// RCH: measured using the bed, result of the phisical dimensions of the extruder head
+#define NOZZLE_TO_PROBE_OFFSET { 27, 8, 0 }
 
 // Certain types of probes need to stay away from edges
-#define MIN_PROBE_EDGE 10
+//#define MIN_PROBE_EDGE 10
+
+// RCH: defined to 0 to manually define the grid of points
+#define MIN_PROBE_EDGE 25
 
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 8000
@@ -1018,8 +1068,8 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR false
-#define INVERT_Y_DIR true
+#define INVERT_X_DIR true
+#define INVERT_Y_DIR false
 #define INVERT_Z_DIR false
 
 // @section extruder
@@ -1050,16 +1100,24 @@
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 200
-#define Y_BED_SIZE 200
+// #define X_BED_SIZE 200
+// #define Y_BED_SIZE 200
+
+// RCH: actually printed in the heated bed
+#define X_BED_SIZE 250
+#define Y_BED_SIZE 210
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
-#define X_MIN_POS 0
-#define Y_MIN_POS 0
+// #define X_MIN_POS 0
+// #define Y_MIN_POS 0
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 200
+
+// RCH: Measured using the heated bed as reference
+#define X_MIN_POS -12
+#define Y_MIN_POS -7
 
 /**
  * Software Endstops
@@ -1088,6 +1146,9 @@
 
 #if EITHER(MIN_SOFTWARE_ENDSTOPS, MAX_SOFTWARE_ENDSTOPS)
   //#define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
+
+  // RCH: for debug purposes, when totally calibrated, remove this option for safety
+  #define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
 #endif
 
 /**
@@ -1164,6 +1225,10 @@
 //#define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
 //#define AUTO_BED_LEVELING_UBL
+//#define MESH_BED_LEVELING
+
+// RCH: the one that works with inductive sensors and prefixed points placed in a grid
+#define AUTO_BED_LEVELING_BILINEAR
 //#define MESH_BED_LEVELING
 
 /**
@@ -1269,7 +1334,8 @@
  * Include a guided procedure if manual probing is enabled.
  */
 //#define LCD_BED_LEVELING
-
+// RCH: Interesting feture to have in the LCD
+#define LCD_BED_LEVELING
 #if ENABLED(LCD_BED_LEVELING)
   #define MESH_EDIT_Z_STEP  0.025 // (mm) Step size while manually probing Z axis.
   #define LCD_PROBE_Z_RANGE 4     // (mm) Z Range centered on Z_MIN_POS for LCD Z adjustment
@@ -1278,6 +1344,9 @@
 
 // Add a menu item to move between bed corners for manual bed adjustment
 //#define LEVEL_BED_CORNERS
+// RCH: Interesting feture to have in the LCD
+#define LEVEL_BED_CORNERS
+
 
 #if ENABLED(LEVEL_BED_CORNERS)
   #define LEVEL_CORNERS_INSET 30    // (mm) An inset for corner leveling
@@ -1315,9 +1384,17 @@
 //
 //#define Z_SAFE_HOMING
 
+//RCH: Needed to find the specific points where the inductive sensor can probe, to find the bed when going down
+#define Z_SAFE_HOMING
+
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
-  #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
+  // #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
+  // #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
+
+  // RCH: measured with a ruler and adjusted empirically
+  #define Z_SAFE_HOMING_X_POINT 35 //( 35 - X_PROBE_OFFSET_FROM_EXTRUDER) - X_MIN_POS // X point for Z homing when homing all axes (G28).
+  #define Z_SAFE_HOMING_Y_POINT 7 //(  7 - Y_PROBE_OFFSET_FROM_EXTRUDER) - Y_MIN_POS // Y point for Z homing when homing all axes (G28).
+
 #endif
 
 // Homing speeds (mm/m)
@@ -1399,7 +1476,7 @@
  *   M501 - Read settings from EEPROM. (i.e., Throw away unsaved changes)
  *   M502 - Revert settings to "factory" defaults. (Follow with M500 to init the EEPROM.)
  */
-//#define EEPROM_SETTINGS     // Persistent storage with M500 and M501
+#define EEPROM_SETTINGS     // Persistent storage with M500 and M501
 //#define DISABLE_M503        // Saves ~2700 bytes of PROGMEM. Disable for release!
 #define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save PROGMEM.
 #if ENABLED(EEPROM_SETTINGS)
@@ -1600,7 +1677,7 @@
  *
  * :['JAPANESE', 'WESTERN', 'CYRILLIC']
  */
-#define DISPLAY_CHARSET_HD44780 JAPANESE
+#define DISPLAY_CHARSET_HD44780 WESTERN
 
 /**
  * Info Screen Style (0:Classic, 1:Prusa)
@@ -1682,6 +1759,8 @@
 //  If CLOCKWISE normally moves UP this makes it go DOWN.
 //
 //#define REVERSE_MENU_DIRECTION
+// RCH: Needed for my big tree tech full graphic smart controller reprap discount
+#define REVERSE_MENU_DIRECTION
 
 //
 // This option reverses the encoder direction for Select Screen.
@@ -1705,6 +1784,8 @@
 // By default Marlin assumes you have a buzzer with a fixed frequency.
 //
 //#define SPEAKER
+// RCH: I like to have sound feedback
+#define SPEAKER
 
 //
 // The duration and frequency for the UI feedback sound.
@@ -1867,7 +1948,7 @@
 // RepRapDiscount FULL GRAPHIC Smart Controller
 // http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller
 //
-//#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
 
 //
 // ReprapWorld Graphical LCD
