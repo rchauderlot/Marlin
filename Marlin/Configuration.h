@@ -696,7 +696,7 @@
 #define X_DRIVER_TYPE  TMC2130
 #define Y_DRIVER_TYPE  TMC2130
 #define Z_DRIVER_TYPE  TMC2130
-//#define Z2_DRIVER_TYPE  TMC2130
+#define Z2_DRIVER_TYPE  TMC2130
 #define E0_DRIVER_TYPE  TMC2130
 
 // Enable this feature if all enabled endstop pins are interrupt-capable.
@@ -742,22 +742,19 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-//#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
-
 // RCH: those values are expressed in the steps needed for a mm, multiplied by the micro stepping value
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 5*16, 5*16, 252.2*16, 9.11*16 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 4.8971*256, 4.8971*256, 253.2204*256, 9.11*256 }
 
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-//#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
-
 // RCH: setting this empirically, when it seems work well without stucking or missing steps
-#define DEFAULT_MAX_FEEDRATE          { 175, 175, 2.5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 175, 175, 2.5, 25 } // default { 300, 300, 5, 25 }
 
-//#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
+// RCH: enabled to debug max speeds
+#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
   #define MAX_FEEDRATE_EDIT_VALUES    { 600, 600, 10, 50 } // ...or, set your own edit limits
 #endif
@@ -768,12 +765,11 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-//#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
-
 // RCH: reducing all, trying to be conservative
-#define DEFAULT_MAX_ACCELERATION      { 1500, 1500, 50, 2000 }
+#define DEFAULT_MAX_ACCELERATION      { 1500, 1500, 50, 2000 } // default { 3000, 3000, 100, 10000 }
 
-//#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
+// RCH: enabling this to tweak those paremeters easily
+#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
   #define MAX_ACCEL_EDIT_VALUES       { 6000, 6000, 200, 20000 } // ...or, set your own edit limits
 #endif
@@ -786,14 +782,10 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-// #define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
-// #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-// #define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
-
 // RCH: reducing all, trying to be conservative
-#define DEFAULT_ACCELERATION          1500    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  1500    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   1500    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  1000    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves
 
 
 /**
@@ -810,7 +802,8 @@
   #define DEFAULT_YJERK 10.0
   #define DEFAULT_ZJERK  0.3
 
-  //#define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
+  // RCH: enabling this to tweak those paremeters easily, but not shown as not using classic jerk
+  #define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
   #if ENABLED(LIMITED_JERK_EDITING)
     #define MAX_JERK_EDIT_VALUES { 20, 20, 0.6, 10 } // ...or, set your own edit limits
   #endif
@@ -826,7 +819,8 @@
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.013 // (mm) Distance from real junction edge
+  // RCH: reducing this as read in the blog article avobe, default 0.013
+  #define JUNCTION_DEVIATION_MM 0.011 // (mm) Distance from real junction edge
 #endif
 
 /**
@@ -892,8 +886,6 @@
  * A Fix-Mounted Probe either doesn't deploy or needs manual deployment.
  *   (e.g., an inductive probe or a nozzle-based probe-switch.)
  */
-//#define FIX_MOUNTED_PROBE
-
 // RCH: for inductive pinda sensor
 #define FIX_MOUNTED_PROBE
 
@@ -963,14 +955,10 @@
  *
  * Specify a Probe position as { X, Y, Z }
  */
-//#define NOZZLE_TO_PROBE_OFFSET { 10, 10, 0 }
-
 // RCH: measured using the bed, result of the phisical dimensions of the extruder head
 #define NOZZLE_TO_PROBE_OFFSET { 27, 8, 0 }
 
 // Certain types of probes need to stay away from edges
-//#define MIN_PROBE_EDGE 10
-
 // RCH: defined to 0 to manually define the grid of points
 #define MIN_PROBE_EDGE 25
 
@@ -1100,24 +1088,18 @@
 // @section machine
 
 // The size of the print bed
-// #define X_BED_SIZE 200
-// #define Y_BED_SIZE 200
-
 // RCH: actually printed in the heated bed
 #define X_BED_SIZE 250
 #define Y_BED_SIZE 210
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
-// #define X_MIN_POS 0
-// #define Y_MIN_POS 0
+#define X_MIN_POS -12 // RCH: Measured using the heated bed as reference
+#define Y_MIN_POS -7 // RCH: Measured using the heated bed as reference
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 200
 
-// RCH: Measured using the heated bed as reference
-#define X_MIN_POS -12
-#define Y_MIN_POS -7
 
 /**
  * Software Endstops
@@ -1145,8 +1127,6 @@
 #endif
 
 #if EITHER(MIN_SOFTWARE_ENDSTOPS, MAX_SOFTWARE_ENDSTOPS)
-  //#define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
-
   // RCH: for debug purposes, when totally calibrated, remove this option for safety
   #define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
 #endif
@@ -1229,7 +1209,6 @@
 
 // RCH: the one that works with inductive sensors and prefixed points placed in a grid
 #define AUTO_BED_LEVELING_BILINEAR
-//#define MESH_BED_LEVELING
 
 /**
  * Normally G28 leaves leveling disabled on completion. Enable
@@ -1333,7 +1312,6 @@
  * Add a bed leveling sub-menu for ABL or MBL.
  * Include a guided procedure if manual probing is enabled.
  */
-//#define LCD_BED_LEVELING
 // RCH: Interesting feture to have in the LCD
 #define LCD_BED_LEVELING
 #if ENABLED(LCD_BED_LEVELING)
@@ -1343,7 +1321,6 @@
 #endif
 
 // Add a menu item to move between bed corners for manual bed adjustment
-//#define LEVEL_BED_CORNERS
 // RCH: Interesting feture to have in the LCD
 #define LEVEL_BED_CORNERS
 
@@ -1382,8 +1359,6 @@
 // - Move the Z probe (or nozzle) to a defined XY point before Z Homing when homing all axes (G28).
 // - Prevent Z homing when the Z probe is outside bed area.
 //
-//#define Z_SAFE_HOMING
-
 //RCH: Needed to find the specific points where the inductive sensor can probe, to find the bed when going down
 #define Z_SAFE_HOMING
 
@@ -1579,7 +1554,7 @@
  * Attention: EXPERIMENTAL. G-code arguments may change.
  *
  */
-//#define NOZZLE_CLEAN_FEATURE
+#define NOZZLE_CLEAN_FEATURE // RCH: maybe helpful if ther is any clog
 
 #if ENABLED(NOZZLE_CLEAN_FEATURE)
   // Default number of pattern repetitions
@@ -1635,7 +1610,7 @@
  *
  * View the current statistics with M78.
  */
-//#define PRINTCOUNTER
+#define PRINTCOUNTER // RCH: always interesting
 
 //=============================================================================
 //============================= LCD and SD support ============================
@@ -1693,7 +1668,8 @@
  * you must uncomment the following option or it won't work.
  *
  */
-//#define SDSUPPORT
+// RCH: enabling SD support for convinence, to not need a PC to print.
+#define SDSUPPORT
 
 /**
  * SD CARD: SPI SPEED
@@ -1750,7 +1726,8 @@
 //
 //  Set this option if CLOCKWISE causes values to DECREASE
 //
-//#define REVERSE_ENCODER_DIRECTION
+// RCH: Needed for my big tree tech full graphic smart controller reprap discount
+#define REVERSE_ENCODER_DIRECTION
 
 //
 // This option reverses the encoder direction for navigating LCD menus.
@@ -1759,8 +1736,6 @@
 //  If CLOCKWISE normally moves UP this makes it go DOWN.
 //
 //#define REVERSE_MENU_DIRECTION
-// RCH: Needed for my big tree tech full graphic smart controller reprap discount
-#define REVERSE_MENU_DIRECTION
 
 //
 // This option reverses the encoder direction for Select Screen.
@@ -1783,7 +1758,6 @@
 // If you have a speaker that can produce tones, enable it here.
 // By default Marlin assumes you have a buzzer with a fixed frequency.
 //
-//#define SPEAKER
 // RCH: I like to have sound feedback
 #define SPEAKER
 

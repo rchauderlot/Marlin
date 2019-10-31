@@ -441,8 +441,7 @@
 #endif
 
 // RCH: to take advantage of the spare driver slot
-//#define Z_DUAL_STEPPER_DRIVERS
-//#define Z_DUAL_STEPPER_DRIVERS
+#define Z_DUAL_STEPPER_DRIVERS
 #if ENABLED(Z_DUAL_STEPPER_DRIVERS)
   //#define Z_DUAL_ENDSTOPS
   #if ENABLED(Z_DUAL_ENDSTOPS)
@@ -894,15 +893,17 @@
 
 // Scroll a longer status message into view
 //#define STATUS_MESSAGE_SCROLLING
+// RCH: To be able to read all the texts
+#define STATUS_MESSAGE_SCROLLING
 
 // On the Info Screen, display XY with one decimal place when possible
 //#define LCD_DECIMAL_SMALL_XY
 
 // The timeout (in ms) to return to the status screen from sub-menus
-//#define LCD_TIMEOUT_TO_STATUS 15000
+#define LCD_TIMEOUT_TO_STATUS 60000
 
 // Add an 'M73' G-code to set the current percentage
-//#define LCD_SET_PROGRESS_MANUALLY
+#define LCD_SET_PROGRESS_MANUALLY // RCH: enabling this to see progress seet by gcode
 
 #if HAS_PRINT_PROGRESS
   //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits (Graphical LCD only)
@@ -1002,10 +1003,10 @@
   #endif
 
   // This allows hosts to request long names for files and folders with M33
-  //#define LONG_FILENAME_HOST_SUPPORT
+  #define LONG_FILENAME_HOST_SUPPORT
 
   // Enable this option to scroll long filenames in the SD card menu
-  //#define SCROLL_LONG_FILENAMES
+  #define SCROLL_LONG_FILENAMES
 
   // Leave the heaters on after Stop Print (not recommended!)
   //#define SD_ABORT_NO_COOLDOWN
@@ -1090,7 +1091,12 @@
      *
      * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
      */
-    //#define SDCARD_CONNECTION LCD
+    // RCH: I belive that for the moment I prefer to have only the onboard sd
+    //      reader, as it is automonted, so it's easier to upload things, without
+    //      extracting the SD card, just by plugging the USB cable.
+    // RCH: As it started to not mount the SD automatically in the PC when plugging
+    //      the usb cable, I prefer to try LCD.
+    #define SDCARD_CONNECTION LCD
   #endif
 
 #endif // SDSUPPORT
@@ -1834,7 +1840,7 @@
 
   #if AXIS_IS_TMC(X)
     #define X_CURRENT     800  // (mA) RMS current. Multiply by 1.414 for peak current.
-    #define X_MICROSTEPS   16  // 0..256
+    #define X_MICROSTEPS  256  // 0..256
     #define X_RSENSE     0.11
     #define X_CHAIN_POS    -1  // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
   #endif
@@ -1847,8 +1853,8 @@
   #endif
 
   #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT     800
-    #define Y_MICROSTEPS   16
+    #define Y_CURRENT     900
+    #define Y_MICROSTEPS  256
     #define Y_RSENSE     0.11
     #define Y_CHAIN_POS    -1
   #endif
@@ -1861,15 +1867,15 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT     850
-    #define Z_MICROSTEPS   16
+    #define Z_CURRENT     700
+    #define Z_MICROSTEPS  256
     #define Z_RSENSE     0.11
     #define Z_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(Z2)
-    #define Z2_CURRENT    850
-    #define Z2_MICROSTEPS  16
+    #define Z2_CURRENT    700
+    #define Z2_MICROSTEPS 256
     #define Z2_RSENSE    0.11
     #define Z2_CHAIN_POS   -1
   #endif
@@ -1883,7 +1889,7 @@
 
   #if AXIS_IS_TMC(E0)
     #define E0_CURRENT    800
-    #define E0_MICROSTEPS  16
+    #define E0_MICROSTEPS 256
     #define E0_RSENSE    0.11
     #define E0_CHAIN_POS   -1
   #endif
@@ -1993,8 +1999,8 @@
    * Use Trinamic's ultra quiet stepping mode.
    * When disabled, Marlin will use spreadCycle stepping mode.
    */
-  #define STEALTHCHOP_XY
-  #define STEALTHCHOP_Z
+  #define STEALTHCHOP_XY // RCH: disabling to have more mechanical power and avoid layer shifting
+  #define STEALTHCHOP_Z // RCH: disabling to have more mechanical power and avoid layer shifting
   //#define STEALTHCHOP_E // RCH: disabling to have more power in the extruder
 
   /**
@@ -2024,9 +2030,7 @@
    * M912 - Clear stepper driver overtemperature pre-warn condition flag.
    * M122 - Report driver parameters (Requires TMC_DEBUG)
    */
-  //#define MONITOR_DRIVER_STATUS
-  // RCH: trying to avoid driver problems
-  #define MONITOR_DRIVER_STATUS
+  #define MONITOR_DRIVER_STATUS // RCH: trying to avoid driver problems
 
   #if ENABLED(MONITOR_DRIVER_STATUS)
     #define CURRENT_STEP_DOWN     50  // [mA]
@@ -2080,7 +2084,6 @@
    * IMPROVE_HOMING_RELIABILITY tunes acceleration and jerk when
    * homing and adds a guard period for endstop triggering.
    */
-  //#define SENSORLESS_HOMING // StallGuard capable drivers only
   // RCH: enabling sensorless homing in order to reduce cable number
   #define SENSORLESS_HOMING // StallGuard capable drivers only
 
@@ -2112,9 +2115,7 @@
    * Enable M122 debugging command for TMC stepper drivers.
    * M122 S0/1 will enable continous reporting.
    */
-  //#define TMC_DEBUG
-  // RCH: enabling as I have problems with the drivers.
-  #define TMC_DEBUG
+  #define TMC_DEBUG   // RCH: enabling as I have problems with the drivers.
 
   /**
    * You can set your own advanced settings by filling in predefined functions.
