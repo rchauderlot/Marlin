@@ -743,7 +743,7 @@
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
 // RCH: those values are expressed in the steps needed for a mm, multiplied by the micro stepping value
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 4.8971*256, 4.8971*256, 253.2204*256, 9.11*256 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 4.990929*256, 4.990929*256, 24.825529*256, 9.2159*256 }
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -751,12 +751,12 @@
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
 // RCH: setting this empirically, when it seems work well without stucking or missing steps
-#define DEFAULT_MAX_FEEDRATE          { 175, 175, 2.5, 25 } // default { 300, 300, 5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 175, 175, 15, 100 } // default { 300, 300, 5, 25 }
 
 // RCH: enabled to debug max speeds
 #define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
-  #define MAX_FEEDRATE_EDIT_VALUES    { 600, 600, 10, 50 } // ...or, set your own edit limits
+  #define MAX_FEEDRATE_EDIT_VALUES    { 600, 600, 50, 150 } // ...or, set your own edit limits
 #endif
 
 /**
