@@ -658,21 +658,13 @@
 #endif
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
-// #define X_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-// #define Y_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-// #define Z_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-// #define X_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-// #define Y_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-// #define Z_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-// #define Z_MIN_PROBE_ENDSTOP_INVERTING false // Set to true to invert the logic of the probe.
-
-#define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true for TMC2130
-#define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true for using the makerbot endstops
-#define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop. // RCH: set to true to use TMC2130 in the future, meanwhile, no endstop will be used as we will use the inductive probe
+#define X_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop. // RCH: set to true for sensorless homming
+#define Y_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop. // RCH: set to true for either makerbot end stop or sensorless homming
+#define Z_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define X_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define Y_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-#define Z_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the end
-#define Z_MIN_PROBE_ENDSTOP_INVERTING true // set to true to invert the logic of the probe. // RCH: set to true for inductive sensor
+#define Z_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define Z_MIN_PROBE_ENDSTOP_INVERTING false // set to true to invert the logic of the probe. // RCH: set to false for BLTOUCH sensor
 
 
 /**
@@ -904,8 +896,7 @@
  * A Fix-Mounted Probe either doesn't deploy or needs manual deployment.
  *   (e.g., an inductive probe or a nozzle-based probe-switch.)
  */
-// RCH: for inductive pinda sensor
-#define FIX_MOUNTED_PROBE
+//#define FIX_MOUNTED_PROBE
 
 /**
  * Use the nozzle as the probe, as with a conductive
@@ -922,7 +913,7 @@
 /**
  * The BLTouch probe uses a Hall effect sensor and emulates a servo.
  */
-//#define BLTOUCH
+ #define BLTOUCH
 
 /**
  * Touch-MI Probe by hotends.fr
@@ -995,7 +986,7 @@
  * Specify a Probe position as { X, Y, Z }
  */
 // RCH: measured using the bed, result of the phisical dimensions of the extruder head
-#define NOZZLE_TO_PROBE_OFFSET { 27, 8, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { 30, 0, -1.477 }
 
 // Certain types of probes need to stay away from edges
 // RCH: defined to 0 to manually define the grid of points
@@ -1365,8 +1356,7 @@
 #endif
 
 // Add a menu item to move between bed corners for manual bed adjustment
-// RCH: Interesting feture to have in the LCD
-#define LEVEL_BED_CORNERS
+//#define LEVEL_BED_CORNERS
 
 
 #if ENABLED(LEVEL_BED_CORNERS)
