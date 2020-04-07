@@ -1215,7 +1215,7 @@
     // RCH: I belive that for the moment I prefer to have only the onboard sd
     //      reader, as it is automonted, so it's easier to upload things, without
     //      extracting the SD card, just by plugging the USB cable.
-    #define SDCARD_CONNECTION ONBOARD
+    #define SDCARD_CONNECTION LCD
   #endif
 
 #endif // SDSUPPORT
@@ -1484,7 +1484,7 @@
   //#define BABYSTEP_WITHOUT_HOMING
   //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
   #define BABYSTEP_INVERT_Z false           // Change if Z babysteps should go the other way
-  #define BABYSTEP_MULTIPLICATOR_Z  20       // Babysteps are very small. Increase for faster motion.
+  #define BABYSTEP_MULTIPLICATOR_Z  100       // Babysteps are very small. Increase for faster motion.
   #define BABYSTEP_MULTIPLICATOR_XY 1
 
   //#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.

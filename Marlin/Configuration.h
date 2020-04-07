@@ -990,7 +990,7 @@
  * Specify a Probe position as { X, Y, Z }
  */
 // RCH: measured using the bed, result of the phisical dimensions of the extruder head
-#define NOZZLE_TO_PROBE_OFFSET { 30, 0, -1.477 }
+#define NOZZLE_TO_PROBE_OFFSET { 30, 0, -0.3 }
 
 // Certain types of probes need to stay away from edges
 // RCH: defined to 0 to manually define the grid of points
@@ -1031,7 +1031,7 @@
  * Example: `M851 Z-5` with a CLEARANCE of 4  =>  9mm from bed to nozzle.
  *     But: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
  */
-#define Z_CLEARANCE_DEPLOY_PROBE   10 // Z Clearance for Deploy/Stow
+#define Z_CLEARANCE_DEPLOY_PROBE    5 // Z Clearance for Deploy/Stow
 #define Z_CLEARANCE_BETWEEN_PROBES  5 // Z Clearance between probe points
 #define Z_CLEARANCE_MULTI_PROBE     5 // Z Clearance between multiple probes
 //#define Z_AFTER_PROBING           5 // Z position after probing is done
