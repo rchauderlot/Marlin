@@ -643,7 +643,7 @@
 
   // Feature: Switch into SW mode after a deploy. It makes the output pulse longer. Can be useful
   //          in special cases, like noisy or filtered input configurations.
-  #define BLTOUCH_FORCE_SW_MODE
+  //#define BLTOUCH_FORCE_SW_MODE
 
   /**
    * Settings for BLTouch Smart 3.0 and 3.1
@@ -690,7 +690,7 @@
  * Z Steppers Auto-Alignment
  * Add the G34 command to align multiple Z steppers using a bed probe.
  */
-//#define Z_STEPPER_AUTO_ALIGN
+#define Z_STEPPER_AUTO_ALIGN
 #if ENABLED(Z_STEPPER_AUTO_ALIGN)
   // Define probe X and Y positions for Z1, Z2 [, Z3 [, Z4]]
   // If not defined, probe limits will be used.
@@ -718,7 +718,7 @@
    *
    */
   #ifndef Z_STEPPER_ALIGN_XY
-    //#define Z_STEPPERS_ORIENTATION 0
+    #define Z_STEPPERS_ORIENTATION 0
   #endif
 
   // Provide Z stepper positions for more rapid convergence in bed alignment.
@@ -1032,7 +1032,7 @@
 #define LCD_SET_PROGRESS_MANUALLY // RCH: enabling this to see progress seet by gcode
 
 // Show the E position (filament used) during printing
-//#define LCD_SHOW_E_TOTAL
+#define LCD_SHOW_E_TOTAL
 
 #if ENABLED(SHOW_BOOTSCREEN)
   #define BOOTSCREEN_TIMEOUT 4000        // (ms) Total Duration to display the boot screen(s)
@@ -1609,7 +1609,7 @@
   //  |   o      o      o |  7
   //  |___________________|
   //     35    136,5   238
-  #define MIN_PROBE_EDGE_LEFT   35 + MIN_PROBE_EDGE // Measurement from border to mark in the bed: 35
+  #define MIN_PROBE_EDGE_LEFT   10 + MIN_PROBE_EDGE // Measurement from border to mark in the bed: 35
   #define MIN_PROBE_EDGE_FRONT  MIN_PROBE_EDGE // Measurement from border to mark in the bed: 7
   #define MIN_PROBE_EDGE_RIGHT  MIN_PROBE_EDGE // Measurement from border to mark in the bed: 238
   #define MIN_PROBE_EDGE_BACK   MIN_PROBE_EDGE // Measurement from border to mark in the bed: 203

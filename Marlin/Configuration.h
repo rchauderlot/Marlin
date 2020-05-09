@@ -1015,7 +1015,7 @@
 
 // Certain types of probes need to stay away from edges
 // RCH: defined to 0 to manually define the grid of points
-#define MIN_PROBE_EDGE 25 //(default: 10)
+#define MIN_PROBE_EDGE 30 //(default: 10)
 
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 8000
