@@ -851,7 +851,7 @@
  */
 #if DISABLED(CLASSIC_JERK)
   // RCH: rising this as that soften the stops when reaching a direction change, default 0.013
-  #define JUNCTION_DEVIATION_MM 0.03 // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.04 // (mm) Distance from real junction edge
 #endif
 
 /**
