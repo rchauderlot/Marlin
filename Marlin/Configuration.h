@@ -481,8 +481,8 @@
 #define PID_MAX BANG_MAX // Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 #define PID_K1 0.95      // Smoothing factor within any PID loop
 #if ENABLED(PIDTEMP)
-  //#define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
-  //#define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
+  #define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
+  #define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
   //#define PID_DEBUG             // Sends debug data to the serial port. Use 'M303 D' to toggle activation.
   //#define PID_OPENLOOP 1        // Puts PID in open loop. M104/M140 sets the output power from 0 to PID_MAX
   //#define SLOW_PWM_HEATERS      // PWM with very low frequency (roughly 0.125Hz=8s) and minimum state time of approximately 1s useful for heaters driven by a relay
@@ -542,7 +542,15 @@
  * When set to any value below 255, enables a form of PWM to the bed that acts like a divider
  * so don't use it unless you are OK with PWM on your bed. (See the comment on enabling PIDTEMPBED)
  */
-#define MAX_BED_POWER 255 // limits duty cycle to bed; 255=full current
+ // RCH: Set to 70% as per this calculations:
+ //      Bed resistance            =   1Ohm
+ //      Hot end heater            =  50W
+ //      Steppers = 5*1A*24v       = 120W
+ //      Fans and board (estimate) =  30W
+ //      Power supply              = 480W
+ //      Power remaining for bed   = 480W - (50W + 120W + 30W) = 280W
+ //      P = V^2/R -> 280 = (24(x/256))^2 / 1 -> x = 178,5 -> aprox 70%
+#define MAX_BED_POWER 177 // limits duty cycle to bed; 255=full current
 
 #if ENABLED(PIDTEMPBED)
   //#define MIN_BED_POWER 0
@@ -842,8 +850,8 @@
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  // RCH: reducing this as read in the blog article avobe, default 0.013
-  #define JUNCTION_DEVIATION_MM 0.011 // (mm) Distance from real junction edge
+  // RCH: rising this as that soften the stops when reaching a direction change, default 0.013
+  #define JUNCTION_DEVIATION_MM 0.03 // (mm) Distance from real junction edge
 #endif
 
 /**
@@ -873,7 +881,7 @@
 #define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
 
 // Force the use of the probe for Z-axis homing
-//#define USE_PROBE_FOR_Z_HOMING
+#define USE_PROBE_FOR_Z_HOMING
 
 /**
  * Z_MIN_PROBE_PIN
@@ -891,7 +899,8 @@
  *      - normally-open switches to 5V and D32.
  *
  */
-//#define Z_MIN_PROBE_PIN 32 // Pin 32 is the RAMPS default
+//#define Z_MIN_PROBE_PIN P1_25 // Pin 32 is the RAMPS default
+                                // SKR 1.3: P1_25 -> z_min pin (checked)
 
 /**
  * Probe Type
@@ -1055,7 +1064,7 @@
 #define Z_PROBE_OFFSET_RANGE_MAX 20
 
 // Enable the M48 repeatability test to test probe accuracy
-//#define Z_MIN_PROBE_REPEATABILITY_TEST
+#define Z_MIN_PROBE_REPEATABILITY_TEST
 
 // Before deploy/stow pause for user confirmation
 //#define PAUSE_BEFORE_DEPLOY_STOW
@@ -2301,12 +2310,12 @@
  * Set this manually if there are extra servos needing manual control.
  * Leave undefined or set to 0 to entirely disable the servo subsystem.
  */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
+#define NUM_SERVOS 1 // Servo index starts with 0 for M280 command
 
 // (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
 // 300ms is a good value but you can try less delay.
 // If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY { 300 }
+#define SERVO_DELAY { 750 }
 
 // Only power servos during movement, otherwise leave off to prevent jitter
 //#define DEACTIVATE_SERVOS_AFTER_MOVE

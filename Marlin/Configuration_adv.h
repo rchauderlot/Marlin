@@ -1514,7 +1514,7 @@
   #define BABYSTEP_MULTIPLICATOR_Z  100       // Babysteps are very small. Increase for faster motion.
   #define BABYSTEP_MULTIPLICATOR_XY 1
 
-  //#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
+  #define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
   #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
     #define DOUBLECLICK_MAX_INTERVAL 1250   // Maximum interval between clicks, in milliseconds.
                                             // Note: Extra time may be added to mitigate controller latency.
@@ -1609,10 +1609,10 @@
   //  |   o      o      o |  7
   //  |___________________|
   //     35    136,5   238
-  #define MIN_PROBE_EDGE_LEFT   40 // Measurement from border to mark in the bed: 35
-  #define MIN_PROBE_EDGE_FRONT  25 // Measurement from border to mark in the bed: 7
-  #define MIN_PROBE_EDGE_RIGHT  25 // Measurement from border to mark in the bed: 238
-  #define MIN_PROBE_EDGE_BACK   25 // Measurement from border to mark in the bed: 203
+  #define MIN_PROBE_EDGE_LEFT   35 + MIN_PROBE_EDGE // Measurement from border to mark in the bed: 35
+  #define MIN_PROBE_EDGE_FRONT  MIN_PROBE_EDGE // Measurement from border to mark in the bed: 7
+  #define MIN_PROBE_EDGE_RIGHT  MIN_PROBE_EDGE // Measurement from border to mark in the bed: 238
+  #define MIN_PROBE_EDGE_BACK   MIN_PROBE_EDGE // Measurement from border to mark in the bed: 203
 #endif
 
 #if EITHER(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL)
@@ -2130,7 +2130,7 @@
   #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
   #if AXIS_IS_TMC(X)
-    #define X_CURRENT      1000        // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT      500        // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
     #define X_MICROSTEPS    256    // 0..256
     #define X_RSENSE          0.11
@@ -2146,7 +2146,7 @@
   #endif
 
   #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT      1000
+    #define Y_CURRENT      500
     #define Y_CURRENT_HOME  Y_CURRENT
     #define Y_MICROSTEPS    256
     #define Y_RSENSE          0.11
@@ -2162,7 +2162,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT       700
+    #define Z_CURRENT       350
     #define Z_CURRENT_HOME  Z_CURRENT
     #define Z_MICROSTEPS    256
     #define Z_RSENSE          0.11
@@ -2170,7 +2170,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z2)
-    #define Z2_CURRENT      700
+    #define Z2_CURRENT      350
     #define Z2_CURRENT_HOME Z2_CURRENT
     #define Z2_MICROSTEPS   256
     #define Z2_RSENSE         0.11
@@ -2194,7 +2194,7 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT      900
+    #define E0_CURRENT      600
     #define E0_MICROSTEPS   256
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
@@ -2324,9 +2324,9 @@
    * Use Trinamic's ultra quiet stepping mode.
    * When disabled, Marlin will use spreadCycle stepping mode.
    */
-  #define STEALTHCHOP_XY // RCH: disabling to have more mechanical power and avoid layer shifting
-  #define STEALTHCHOP_Z // RCH: disabling to have more mechanical power and avoid layer shifting
-  //#define STEALTHCHOP_E // RCH: disabling to have more power in the extruder
+  #define STEALTHCHOP_XY
+  #define STEALTHCHOP_Z
+  #define STEALTHCHOP_E 
 
   /**
    * Optimize spreadCycle chopper parameters by using predefined parameter sets
@@ -2417,16 +2417,16 @@
 
   #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
     // TMC2209: 0...255. TMC2130: -64...63
-    #define X_STALL_SENSITIVITY  8 
+    #define X_STALL_SENSITIVITY  2
     #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-    #define Y_STALL_SENSITIVITY  8
+    #define Y_STALL_SENSITIVITY  2
     #define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
     //#define Z_STALL_SENSITIVITY  8
     //#define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
     //#define Z3_STALL_SENSITIVITY Z_STALL_SENSITIVITY
     //#define Z4_STALL_SENSITIVITY Z_STALL_SENSITIVITY
     //#define SPI_ENDSTOPS              // TMC2130 only
-    //#define IMPROVE_HOMING_RELIABILITY
+    #define IMPROVE_HOMING_RELIABILITY
   #endif
 
   /**
@@ -3365,7 +3365,7 @@
 //
 // M43 - display pin status, toggle pins, watch pins, watch endstops & toggle LED, test servo probe
 //
-//#define PINS_DEBUGGING
+#define PINS_DEBUGGING
 
 // Enable Marlin dev mode which adds some special commands
 //#define MARLIN_DEV_MODE
