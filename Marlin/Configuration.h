@@ -550,7 +550,7 @@
  //      Power supply              = 480W
  //      Power remaining for bed   = 480W - (50W + 120W + 30W) = 280W
  //      P = V^2/R -> 280 = (24(x/256))^2 / 1 -> x = 178,5 -> aprox 70%
-#define MAX_BED_POWER 177 // limits duty cycle to bed; 255=full current
+#define MAX_BED_POWER 167 // limits duty cycle to bed; 255=full current
 
 #if ENABLED(PIDTEMPBED)
   //#define MIN_BED_POWER 0
@@ -574,9 +574,10 @@
   // #define DEFAULT_bedKp 115.12
   // #define DEFAULT_bedKi 4.21
   // #define DEFAULT_bedKd 787.44
-  #define DEFAULT_bedKp 13.16
-  #define DEFAULT_bedKi 0.49
-  #define DEFAULT_bedKd 235.29
+
+  #define DEFAULT_bedKp 14.82
+  #define DEFAULT_bedKi 0.57
+  #define DEFAULT_bedKd 257.02
 
 
 #endif // PIDTEMPBED
@@ -771,20 +772,19 @@
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
 // RCH: those values are expressed in the steps needed for a mm, multiplied by the micro stepping value
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 4.990929*256, 4.990929*256, 24.825529*256, 9.2159*256 }
-
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 6.25*256, 5*256, 24.85*256, 8.7206896*256 }
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
 // RCH: setting this empirically, when it seems work well without stucking or missing steps
-#define DEFAULT_MAX_FEEDRATE          { 175, 175, 15, 100 } // default { 300, 300, 5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 200, 200, 25, 100 } // default { 300, 300, 5, 25 }
 
 // RCH: enabled to debug max speeds
 #define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
-  #define MAX_FEEDRATE_EDIT_VALUES    { 600, 600, 50, 150 } // ...or, set your own edit limits
+  #define MAX_FEEDRATE_EDIT_VALUES    { 1500, 1500, 1000, 1000 } // ...or, set your own edit limits
 #endif
 
 /**
@@ -794,12 +794,12 @@
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
 // RCH: reducing all, trying to be conservative
-#define DEFAULT_MAX_ACCELERATION      { 1500, 1500, 50, 2000 } // default { 3000, 3000, 100, 10000 }
+#define DEFAULT_MAX_ACCELERATION      { 6000, 2000, 100, 2000 } // default { 3000, 3000, 100, 10000 }
 
 // RCH: enabling this to tweak those paremeters easily
 #define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
-  #define MAX_ACCEL_EDIT_VALUES       { 6000, 6000, 200, 20000 } // ...or, set your own edit limits
+  #define MAX_ACCEL_EDIT_VALUES       { 20000, 20000, 1000, 20000 } // ...or, set your own edit limits
 #endif
 
 /**
@@ -851,7 +851,7 @@
  */
 #if DISABLED(CLASSIC_JERK)
   // RCH: rising this as that soften the stops when reaching a direction change, default 0.013
-  #define JUNCTION_DEVIATION_MM 0.04 // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.15 // (mm) Distance from real junction edge
 #endif
 
 /**
@@ -2200,14 +2200,14 @@
 // Use software PWM to drive the fan, as for the heaters. This uses a very low frequency
 // which is not as annoying as with the hardware PWM. On the other hand, if this frequency
 // is too low, you should also increment SOFT_PWM_SCALE.
-//#define FAN_SOFT_PWM
+#define FAN_SOFT_PWM
 
 // Incrementing this by 1 will double the software PWM frequency,
 // affecting heaters, and the fan if FAN_SOFT_PWM is enabled.
 // However, control resolution will be halved for each increment;
 // at zero value, there are 128 effective control positions.
 // :[0,1,2,3,4,5,6,7]
-#define SOFT_PWM_SCALE 0
+//#define SOFT_PWM_SCALE 0
 
 // If SOFT_PWM_SCALE is set to a value higher than 0, dithering can
 // be used to mitigate the associated resolution loss. If enabled,
@@ -2277,7 +2277,7 @@
   #define NEOPIXEL_PIXELS 3       // Number of LEDs in the strip, larger of 2 strips if 2 neopixel strips are used
   #define NEOPIXEL_IS_SEQUENTIAL   // Sequential display for temperature change - LED by LED. Disable to change all LEDs at once.
   #define NEOPIXEL_BRIGHTNESS 127  // Initial brightness (0-255)
-  //#define NEOPIXEL_STARTUP_TEST  // Cycle through colors at startup
+  #define NEOPIXEL_STARTUP_TEST  // Cycle through colors at startup
 
   // Use a single Neopixel LED for static (background) lighting
   #define NEOPIXEL_BKGD_LED_INDEX 0 // Index of the LED to use - Do not change this setting
