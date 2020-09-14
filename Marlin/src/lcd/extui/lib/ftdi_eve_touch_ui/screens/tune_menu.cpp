@@ -17,7 +17,7 @@
  *   GNU General Public License for more details.                           *
  *                                                                          *
  *   To view a copy of the GNU General Public License, go to the following  *
- *   location: <http://www.gnu.org/licenses/>.                              *
+ *   location: <https://www.gnu.org/licenses/>.                              *
  ****************************************************************************/
 
 #include "../config.h"
@@ -57,7 +57,7 @@ void TuneMenu::onRedraw(draw_mode_t what) {
     #define PAUSE_POS       BTN_POS(1,3), BTN_SIZE(1,1)
     #define STOP_POS        BTN_POS(2,3), BTN_SIZE(1,1)
     #define FILAMENT_POS    BTN_POS(1,4), BTN_SIZE(1,1)
-    #defome BACK_POS        BTN_POS(2,4), BTN_SIZE(1,1)
+    #define BACK_POS        BTN_POS(2,4), BTN_SIZE(1,1)
   #endif
 
   if (what & FOREGROUND) {

@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 #include "../../inc/MarlinConfig.h"
@@ -93,7 +93,7 @@ void GcodeSuite::M360() {
   config_line(PSTR("SupportG10G11"), ENABLED(FWRETRACT));
   #if ENABLED(FWRETRACT)
     PGMSTR(RET_STR, "Retraction");
-    PGMSTR(UNRET_STR, "RetractionUndo"),
+    PGMSTR(UNRET_STR, "RetractionUndo");
     PGMSTR(SPEED_STR, "Speed");
     // M10 Retract with swap (long) moves
     config_line(PSTR("Length"), fwretract.settings.retract_length, RET_STR);
@@ -115,8 +115,7 @@ void GcodeSuite::M360() {
   xyz_pos_t cmin = dmin, cmax = dmax;
   apply_motion_limits(cmin);
   apply_motion_limits(cmax);
-  const xyz_pos_t lmin = dmin.asLogical(), lmax = dmax.asLogical(),
-                  wmin = cmin.asLogical(), wmax = cmax.asLogical();
+  const xyz_pos_t wmin = cmin.asLogical(), wmax = cmax.asLogical();
 
   PGMSTR(MIN_STR, "Min");
   PGMSTR(MAX_STR, "Max");
