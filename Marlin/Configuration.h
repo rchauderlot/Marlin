@@ -780,7 +780,7 @@
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
 // RCH: those values are expressed in the steps needed for a mm, multiplied by the micro stepping value
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 6.25*256, 5*256, 24.85*256, 8.7206896*256 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 6.25*256, 5*256, 24.85*256, 9.07729772*256 }
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
