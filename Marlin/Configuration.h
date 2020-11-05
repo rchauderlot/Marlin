@@ -641,8 +641,9 @@
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
 //#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 200, 200, 5, 25 }
 // FROM MARQUEVICHI CONF: START
-#define DEFAULT_MAX_FEEDRATE          {500, 500, 5, 45}    // (mm/sec)
+//#define DEFAULT_MAX_FEEDRATE          {500, 500, 5, 45}    // (mm/sec)
 // FROM MARQUEVICHI CONF: END
 
 /**
@@ -651,11 +652,10 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-//#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
+ #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 } // restoring the default values due to too fast homing speeds.
 // FROM MARQUEVICHI CONF: START
 //#define DEFAULT_MAX_ACCELERATION      {9000,9000,100,10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 // FROM MARQUEVICHI CONF: END
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 } // restoring the default values due to too fast homing speeds.
 
 /**
  * Default Acceleration (change/s) change = mm/s
