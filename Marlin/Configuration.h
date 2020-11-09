@@ -573,10 +573,10 @@
  */
 #define X_DRIVER_TYPE  DRV8825
 #define Y_DRIVER_TYPE  DRV8825
-#define Z_DRIVER_TYPE  DRV882588
+#define Z_DRIVER_TYPE  DRV8825
 //#define X2_DRIVER_TYPE A4988
 //#define Y2_DRIVER_TYPE A4988
-//#define Z2_DRIVER_TYPE A4988
+#define Z2_DRIVER_TYPE DRV8825
 #define E0_DRIVER_TYPE DRV8825
 //#define E1_DRIVER_TYPE A4988
 //#define E2_DRIVER_TYPE A4988
@@ -640,11 +640,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-//#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
-#define DEFAULT_MAX_FEEDRATE          { 200, 200, 5, 25 }
-// FROM MARQUEVICHI CONF: START
-//#define DEFAULT_MAX_FEEDRATE          {500, 500, 5, 45}    // (mm/sec)
-// FROM MARQUEVICHI CONF: END
+#define DEFAULT_MAX_FEEDRATE          { 200, 200, 3, 25 }
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
@@ -652,10 +648,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
- #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 } // restoring the default values due to too fast homing speeds.
-// FROM MARQUEVICHI CONF: START
-//#define DEFAULT_MAX_ACCELERATION      {9000,9000,100,10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
-// FROM MARQUEVICHI CONF: END
+ #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 15, 10000 } // restoring the default values due to too fast homing speeds.
 
 /**
  * Default Acceleration (change/s) change = mm/s
@@ -679,7 +672,7 @@
  */
 #define DEFAULT_XJERK                 10.0
 #define DEFAULT_YJERK                 10.0
-#define DEFAULT_ZJERK                  0.3
+#define DEFAULT_ZJERK                  0.5
 #define DEFAULT_EJERK                  5.0
 
 // FROM MARQUEVICHI CONF: START
@@ -886,16 +879,9 @@
 #define DISABLE_INACTIVE_EXTRUDER true // Keep only the active extruder enabled.
 
 // @section machine
-
-// Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-//#define INVERT_X_DIR false
-//#define INVERT_Y_DIR true
-//#define INVERT_Z_DIR false
-// FROM MARQUEVICHI CONF: START
 #define INVERT_X_DIR true    // for Mendel set to false, for Orca set to true
 #define INVERT_Y_DIR true   // for Mendel set to true, for Orca set to false
 #define INVERT_Z_DIR true     // for Mendel set to false, for Orca set to true
-// FROM MARQUEVICHI CONF: END
 
 
 // @section extruder
