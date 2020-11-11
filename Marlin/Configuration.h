@@ -395,20 +395,10 @@
   //#define DEFAULT_Ki 2.25
   //#define DEFAULT_Kd 440
 
-// FROM MARQUEVICHI CONF: START
-
-  // J-Head
-  //    #define  DEFAULT_Kp 45.78
-  //    #define  DEFAULT_Ki 6.42
-  //    #define  DEFAULT_Kd 78.75
-
-  // J-Head 230 bed 97C
-  // 28.04.2013
-      #define  DEFAULT_Kp 25.08
-      #define  DEFAULT_Ki 1.95
-      #define  DEFAULT_Kd 80.55
-
-// FROM MARQUEVICHI CONF: END
+  // FIND YOUR OWN: "M303 E0 S200 C3" to run autotune on the hotend at 200 degreesC for 3 cycles.
+  #define DEFAULT_Kp 22.00
+  #define DEFAULT_Ki 1.62
+  #define DEFAULT_Kd 74.80
 
 #endif // PIDTEMP
 
@@ -429,7 +419,6 @@
  * heater. If your configuration is significantly different than this and you don't understand
  * the issues involved, don't use bed PID until someone else verifies that your hardware works.
  */
-//#define PIDTEMPBED
 #define PIDTEMPBED
 
 //#define BED_LIMIT_SWITCHING
@@ -448,9 +437,9 @@
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  #define DEFAULT_bedKp 10.00
-  #define DEFAULT_bedKi .023
-  #define DEFAULT_bedKd 305.4
+  //#define DEFAULT_bedKp 10.00
+  //#define DEFAULT_bedKi .023
+  //#define DEFAULT_bedKd 305.4
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from pidautotune
@@ -459,6 +448,11 @@
   //#define DEFAULT_bedKd 1675.16
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
+
+  #define DEFAULT_bedKp 497.32
+  #define DEFAULT_bedKi 34.69
+  #define DEFAULT_bedKd 1782.40
+
 #endif // PIDTEMPBED
 
 // @section extruder
