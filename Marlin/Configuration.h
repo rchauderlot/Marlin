@@ -727,11 +727,11 @@
 //#define E6_DRIVER_TYPE A4988
 //#define E7_DRIVER_TYPE A4988
 
-#define X_DRIVER_TYPE  TMC2130
-#define Y_DRIVER_TYPE  TMC2130
+//#define X_DRIVER_TYPE  TMC2130
+//#define Y_DRIVER_TYPE  TMC2130
 #define Z_DRIVER_TYPE  TMC2130
 #define Z2_DRIVER_TYPE  TMC2130
-#define E0_DRIVER_TYPE  TMC2130
+//#define E0_DRIVER_TYPE  TMC2130
 
 // Enable this feature if all enabled endstop pins are interrupt-capable.
 // This will remove the need to poll the interrupt pins, saving many CPU cycles.
@@ -779,15 +779,15 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-// RCH: those values are expressed in the steps needed for a mm, multiplied by the micro stepping value
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 6.25*256, 5*256, 24.85*256, 9.07729772*256 }
+// RCH: those values are expressed in the number of full steps needed for a mm, multiplied by the micro stepping value
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 6.25*32, 5*32, 24.85*256, 9.07729772*32 }
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
 // RCH: setting this empirically, when it seems work well without stucking or missing steps
-#define DEFAULT_MAX_FEEDRATE          { 200, 200, 25, 100 } // default { 300, 300, 5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 200, 200, 25, 50 } // default { 300, 300, 5, 25 }
 
 // RCH: enabled to debug max speeds
 #define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
@@ -802,7 +802,7 @@
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
 // RCH: reducing all, trying to be conservative
-#define DEFAULT_MAX_ACCELERATION      { 6000, 2000, 100, 2000 } // default { 3000, 3000, 100, 10000 }
+#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 5000 } // default { 3000, 3000, 100, 10000 }
 
 // RCH: enabling this to tweak those paremeters easily
 #define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
@@ -1136,8 +1136,8 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR true
-#define INVERT_Y_DIR false
+#define INVERT_X_DIR false
+#define INVERT_Y_DIR true
 #define INVERT_Z_DIR true
 
 // @section extruder
