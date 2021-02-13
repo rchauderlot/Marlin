@@ -627,14 +627,15 @@
 // FROM MARQUEVICHI CONF: START
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   {80.90,80.90,2560,863}  // default steps per unit for ultimaker
 // FROM MARQUEVICHI CONF: END
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {161.80,161.80,5120,1726}  // doubled all the steps from the marquevichi configuration due to the upgrade of the pololus A4988 with the DRV8825
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   {161.80,161.80,5120,1726}  // doubled all the steps from the marquevichi configuration due to the upgrade of the pololus A4988 with the DRV8825
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {161.80,161.80,5120,1798}  // doubled all the steps from the marquevichi configuration due to the upgrade of the pololus A4988 with the DRV8825
 
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 150, 150, 3, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 150, 150, 3, 20 }
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
@@ -642,7 +643,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
- #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 15, 6000 } // restoring the default values due to too fast homing speeds.
+ #define DEFAULT_MAX_ACCELERATION      { 1500, 1500, 15, 6000 } // restoring the default values due to too fast homing speeds.
 
 /**
  * Default Acceleration (change/s) change = mm/s
